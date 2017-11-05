@@ -1,0 +1,84 @@
+{{extend ("./layout.xtpl")}}
+
+{{#block ("main")}}
+    <!-- 写文章 -->
+    <div class="body blog">
+        <!-- 面包屑 -->
+        <ol class="breadcrumb">
+            <li><a href="javascript:;">文章管理</a></li>
+            <li class="active">写文章</li>
+        </ol>
+        <div class="settings">
+            <form action="" class="form-horizontal">
+                <div class="form-group">
+                    <label for="" class="col-xs-3 control-label">标题</label>
+                    <div class="col-xs-6">
+                        {{#if(action)}}
+                        <input type="text" data-action="{{action}}" value="{{posts.title}}" name="title" class="form-control input-sm title">
+                        {{else}}
+                        <input type="text" data-action="/admin/add" value="{{posts.title}}" name="title" class="form-control input-sm title">
+                        {{/if}}
+                        <input type="hidden" value="{{posts.id}}" name="id" id="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-xs-3 control-label">摘要</label>
+                    <div class="col-xs-6 ckeditor">
+                        <textarea name="brief" rows="5" class="form-control input-sm">{{posts.brief}}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-xs-3 control-label">内容</label>
+                    <div class="col-xs-6">
+                        <textarea id="ckeditor" name="content" class="form-control input-sm">{{posts.content}}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-9">
+                        <input type="submit" class="btn btn-success btn-sm pull-right" value="保 存" name="" id="">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{{/block}}
+
+{{#block ("script")}}
+    <script src="/admin/assets/ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('ckeditor', {
+            toolbarGroups: [
+                { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+                { name: 'forms' },
+                { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+                { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+                { name: 'styles' },
+                { name: 'colors' }
+            ]
+        });
+
+        $(function(){
+            $("form").on("submit",function(){
+                // 表单序列化并不能将富文本编辑器里的内容提交给后台，需要进行如下设置
+                for (instance in CKEDITOR.instances) {
+                    CKEDITOR.instances[instance].updateElement();
+                }
+                var url = $(this).find(".title").attr("data-action");
+                // console.log(url);
+                // 这里的url是网络路径，不写的话相当于当前
+                $.ajax({
+                    url:url,
+                    type:"post",
+                    data: $("form").serialize(),
+                    success: function(info){
+                        if(info.code==100){
+                            location.href = "/admin/list";
+                        }
+                    }
+                });
+
+                return false;
+            });
+        })
+    </script>
+{{/block}}
