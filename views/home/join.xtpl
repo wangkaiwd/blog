@@ -57,7 +57,7 @@
                             <li>
                                 <a href="/center">
                                     <img src="/home/uploads/avatar/botue.jpg" alt="">
-                                    <span>老布头儿</span>
+                                    <span>hello world</span>
                                 </a>
                             </li>
                             <li>
@@ -69,7 +69,7 @@
                             <li>
                                 <a href="/center">
                                     <img src="/home/uploads/avatar/botue.jpg" alt="">
-                                    <span>老布头儿</span>
+                                    <span>hello world</span>
                                 </a>
                             </li>
                             <li>
@@ -83,7 +83,7 @@
                 </aside>
                 <section class="main">
                     <div class="article">
-                        <h2 class="title">传智招聘</h2>
+                        <h2 class="title">前端招聘</h2>
                         <p>作为鹅厂的鹅，常常被鹅们拉着帮忙发招聘贴，所以前一段发了蛮多的招聘信息，不过不想再骚扰读者了，所以这里统一发布一篇招聘贴：长期有效。</p>
                     </div>
                 </section>
