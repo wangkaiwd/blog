@@ -1,21 +1,23 @@
 {
-  "name": "bk",
+  "name": "node-blog",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
-  "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
-    "express-session": "^1.15.6",
-    "multer": "^1.3.0",
-    "mysql": "^2.15.0",
-    "xtemplate": "^4.6.1",
-    "xtpl": "^3.3.0"
-  },
-  "devDependencies": {},
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wangkaiwd/blog.git"
+  },
+  "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wangkaiwd/blog/issues"
+  },
+  "homepage": "https://github.com/wangkaiwd/blog#readme",
+  "dependencies": {
+    "nodemon": "^1.18.10"
+  }
 }
