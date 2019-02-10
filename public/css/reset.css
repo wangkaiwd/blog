@@ -81,3 +81,12 @@ th {
   padding: 0;
   text-align: left;
 }
+
+img {
+  vertical-align: top;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

@@ -6,16 +6,27 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <!--这里的./：localhost:3000, 如果改为/: 还是localhost:3000-->
   <link rel="stylesheet" href="./css/reset.css">
   <link rel="stylesheet" href="./css/index.css">
   <script src="./js/index.js"></script>
 </head>
 <body>
 <div>
-  <h2>
-    hello world
-  </h2>
-  <img src="./img/img001.jpg" alt="图片">
+  <div class="avatar">
+    <img src="./img/avatar.jpg" alt="">
+  </div>
+  <div class="nav">
+    <!--
+    这里的./和/都表示localhost:3000，在node处逻辑的时候，请求的url分别是:
+    '/','/about','/list',即使href将'/'替换成'./'也是一样的
+    之后node会通过path.resolve拼接路径，加载对应的文件资源
+    （代码中是在对应的req.url统一拼接'./public',这里的'./'是相对于process.cwd():当前进程运行目录）
+    -->
+    <a href="/">首页</a>
+    <a href="/about">关于作者</a>
+    <a href="/list">博客列表</a>
+  </div>
 </div>
 
 </body>
