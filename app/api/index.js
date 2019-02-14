@@ -1,8 +1,8 @@
 const apiServer = (url) => {
-  return {
-    name: 'wk',
-    age: 12,
-    height: 187
+  const apiMap = {
+    '/list.action': ['商品1', '商品2', '商品3'],
+    '/user.action': ['用户1', '用户2', '用户3']
   };
+  return apiMap[url];
 };
 module.exports = apiServer;

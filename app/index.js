@@ -12,11 +12,21 @@ class App {
       let body;
       if (path.extname(url) === '.action') {
         body = JSON.stringify(apiServer(url));
+        res.setHeader('Content-Type', 'application/json');
+        res.writeHead(200, 'resolve OK');
+        res.end(body);
       } else {
-        body = staticFunc(url);
+        // console.log(staticFunc(url));
+        staticFunc(url).then(
+          body => {
+            res.writeHead(200, 'resolve OK');
+            res.end(body);
+          },
+          err => {
+            console.log('err', err);
+          }
+        );
       }
-      res.writeHead(200, 'resolve OK');
-      res.end(body);
     };
   }
 }
