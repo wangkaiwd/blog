@@ -19,6 +19,8 @@ const staticFunc = (url) => {
     fs.readFile(path, (err, data) => {
       if (err) return reject(err);
       resolve(data);
+    }).catch(err => {
+      return `NOT FOUND ${err.message}`;
     });
   });
 };
