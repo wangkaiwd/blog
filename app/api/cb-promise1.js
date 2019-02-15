@@ -30,7 +30,9 @@ timeout(100).then(result => {
   //       的拒绝状态的回调函数的参数值作为该被返回的Promise的拒绝状态回调函数的参数值
   // return Promise.reject(1);
   //  Promise.reject(1) ====>> new Promise((resolve,reject) => reject(1))
-  //    5.
+  //    5. 如果then中的回调函数返回一个未定状态(Pending)的Promise,那么then返回Promise的状态也是未定的，并且它的终态与那个Promise的终态相同；
+  //       同时，它变为终态时调用的回调函数参数与那个Promise变为终态时的回调函数的参数是相同的
+  //       return new Promise((resolve,reject) => {setTimeout(resolve,1000,'done')})
 }).then(
   result2 => {
     console.log(result2);
