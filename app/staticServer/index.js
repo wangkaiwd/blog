@@ -16,12 +16,12 @@ const staticFunc = (url) => {
   return new Promise((resolve, reject) => {
     if (url === '/favicon.ico') return resolve('NOT FOUND');
     const path = getPath(html[url] || url);
-    fs.readFile(path, (err, data) => {
-      if (err) return reject(err);
-      resolve(data);
-    }).catch(err => {
-      return `NOT FOUND ${err.message}`;
+      fs.readFile(path, (err, data) => {
+        if (err) return reject(err);
+        resolve(data);
     });
+  }).catch(err => {
+    return `NOT FOUND ${err.message}`;
   });
 };
 module.exports = staticFunc;

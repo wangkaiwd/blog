@@ -8,13 +8,14 @@ class App {
   initServer () {
     return (req, res) => {
       // 例： url = /css/reset.css,这里的'/'代表服务器根路径: localhost:3000
-      const { url } = req;
+      const {url} = req;
       let body;
       if (path.extname(url) === '.action') {
-        body = JSON.stringify(apiServer(url));
-        res.setHeader('Content-Type', 'application/json');
-        res.writeHead(200, 'resolve OK');
-        res.end(body);
+        apiServer(req).then(data => {
+          res.setHeader('Content-Type', 'application/json');
+          res.writeHead(200, 'resolve OK');
+          res.end(data);
+        });
       } else {
         staticFunc(url).then(
           body => {
