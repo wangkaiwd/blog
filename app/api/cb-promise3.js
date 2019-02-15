@@ -8,3 +8,5 @@
 // }).then(result => {
 //   console.log('then', result);
 // });
+const fn = require('./cb-promise2');
+fn().then(result => console.log('result', result));

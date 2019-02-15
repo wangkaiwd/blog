@@ -28,3 +28,9 @@ p1.then(result1 => {
 setTimeout(() => {
   console.log(p2);
 }, 200);
+const fn = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, 1000, 'done');
+  });
+};
+module.exports = fn;
