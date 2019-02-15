@@ -11,13 +11,13 @@ const apiServer = (req) => {
         body += chunk;
       });
       req.on('end', () => {
-        resolve(JSON.stringify(body));
+        resolve(JSON.parse(body));
       });
       req.on('error', err => {
         reject(err);
       });
     });
   }
-  return Promise.resolve(JSON.stringify(apiMap[url]));
+  return Promise.resolve(apiMap[url]);
 };
 module.exports = apiServer;

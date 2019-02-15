@@ -17,10 +17,10 @@ setTimeout(() => {
       },
       type: 'POST',
       // 这里要通过JSON.stringify转换为json格式的字符串
-      data: JSON.stringify({
-        userName: 'wk',
-        password: 'admin'
-      }),
+      data: JSON.stringify([
+        'wk',
+        'admin'
+      ]),
       // data: {
       //   userName: 'wk',
       //   password: 'admin'

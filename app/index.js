@@ -11,7 +11,9 @@ class App {
       const {url} = req;
       let body;
       if (path.extname(url) === '.action') {
+        console.log('apiServer', apiServer(req));
         apiServer(req).then(data => {
+          data = JSON.stringify(data);
           res.setHeader('Content-Type', 'application/json');
           res.writeHead(200, 'resolve OK');
           res.end(data);
