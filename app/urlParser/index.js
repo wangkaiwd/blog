@@ -1,16 +1,17 @@
-const urlParse = (req) => {
-  const {method} = req;
+const urlParse = (ctx) => {
+  const {req, reqCtx} = ctx;
   return new Promise((resolve, reject) => {
-    if (method.toLowerCase() === 'post') {
-      let body = '';
+    if (req.method.toLowerCase() === 'post') {
       req.on('data', chunk => {
-        body += chunk;
+        reqCtx.body += chunk;
       });
       req.on('end', () => {
-        resolve(JSON.parse(body));
+        reqCtx.body = JSON.parse(reqCtx.body);
+        resolve();
       });
       req.on('error', err => {
-        reject(err);
+        reqCtx.body = err;
+        reject();
       });
       return;
     }

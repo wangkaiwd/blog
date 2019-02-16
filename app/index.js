@@ -13,25 +13,52 @@ const urlParser = require('./urlParser');
 class App {
   initServer () {
     return (req, res) => {
-      urlParser(req).then(
-        params => {
-          return apiServer(req, params);
+      // 通过一个对象来整合req与res
+      const ctx = {
+        req,
+        reqCtx: {body: '', query: {}},
+        res,
+        resCtx: {body: '', headers: {}}
+      };
+      urlParser(ctx).then(() => {
+        return apiServer(ctx);
+      }).then(() => {
+        const {query, body} = ctx.reqCtx;
+        if (Object.keys(query).length === 0 && body === '') {
+          return staticServer(ctx);
         }
-      ).then(result => {
-        if (result) return result;
-        return staticServer(req.url);
-      }).then(data => {
-        // api
-        if (!Buffer.isBuffer(data)) {
-          res.writeHead(200, 'resolve OK', {
-            'Content-Type': 'application/json'
-          });
-          res.write(JSON.stringify(data));
-        } else { // 静态文件加载
-          res.write(data);
+      }).then(() => {
+        const {resCtx, reqCtx} = ctx;
+        // 静态资源
+        resCtx.body = reqCtx.body;
+        if (!Buffer.isBuffer(reqCtx.body)) {
+          resCtx.body = reqCtx.body ? JSON.stringify(reqCtx.body) : JSON.stringify(reqCtx.query);
+          resCtx.headers = {'Content-Type': 'application/json'};
         }
+        res.writeHead(200, 'resolve OK', resCtx.headers);
+        res.write(resCtx.body);
         res.end();
       });
+
+      // urlParser(req).then(
+      //   params => {
+      //     return apiServer(req, params);
+      //   }
+      // ).then(result => {
+      //   if (result) return result;
+      //   return staticServer(req);
+      // }).then(data => {
+      //   // api
+      //   if (!Buffer.isBuffer(data)) {
+      //     res.writeHead(200, 'resolve OK', {
+      //       'Content-Type': 'application/json'
+      //     });
+      //     res.write(JSON.stringify(data));
+      //   } else { // 静态文件加载
+      //     res.write(data);
+      //   }
+      //   res.end();
+      // });
 
       // 例： url = /css/reset.css,这里的'/'代表服务器根路径: localhost:3000
       // const {url} = req;

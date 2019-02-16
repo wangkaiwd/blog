@@ -1,5 +1,6 @@
-const apiServer = (req, params) => {
-  const {method, url} = req;
+const apiServer = (ctx) => {
+  const {method, url} = ctx.req;
+  const {reqCtx} = ctx;
   const apiMap = {
     '/list.action': ['商品1', '商品2', '商品3'],
     '/user.action': ['用户1', '用户2', '用户3']
@@ -11,9 +12,10 @@ const apiServer = (req, params) => {
   //   resolve(apiMap[url]);
   // });
   if (method.toLowerCase() === 'post') {
-    return Promise.resolve(params);
+    return Promise.resolve();
   }
   // 如果apiMap里没有内容，说明是并不是ajax请求，而是静态资源请求
-  return Promise.resolve(apiMap[url]);
+  reqCtx.query = apiMap[url] || {};
+  return Promise.resolve();
 };
 module.exports = apiServer;

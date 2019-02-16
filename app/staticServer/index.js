@@ -5,7 +5,9 @@
 const path = require('path');
 const fs = require('fs');
 const getPath = dir => path.resolve(process.cwd(), `public${dir}`);
-const staticFunc = (url) => {
+const staticFunc = (ctx) => {
+  const {url} = ctx.req;
+  const {reqCtx} = ctx;
   const html = {
     '/': '/index.html',
     '/about': '/about.html',
@@ -17,11 +19,13 @@ const staticFunc = (url) => {
     if (url === '/favicon.ico') return resolve('NOT FOUND');
     const path = getPath(html[url] || url);
     fs.readFile(path, (err, data) => {
-      if (err) return reject(err);
-      resolve(data);
+      if (err) {
+        reqCtx.body = err;
+        return reject(err);
+      }
+      reqCtx.body = data;
+      resolve();
     });
-  }).catch(err => {
-    return `NOT FOUND ${err.message}`;
-  });
+  }).catch(err => reqCtx.body = `NOT FOUND ${err.message}`);
 };
 module.exports = staticFunc;
